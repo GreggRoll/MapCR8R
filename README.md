@@ -1,5 +1,8 @@
 ## Map CR8R
-![demo map](map.png)
+# Sample Plot Map
+![demo map](plot_map.png)
+# Sample 3D Heat Map
+![Heat Map](3D_HM.png)
 # Requirements
  PySimpleGUI
  geopandas
