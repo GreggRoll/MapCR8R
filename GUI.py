@@ -1,33 +1,6 @@
 import PySimpleGUI as sg
-import geopandas as gpd
 import pandas as pd
-import cartopy.crs as ccrs
-import cartopy
-import matplotlib.pyplot as plt 
 
-def HarryPlotter(df, lat_column, lon_column, boundaries, export_path):
-    """
-    If variables not given in GUI it will default to values
-    """
-    gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Long_, df.Lat))
-    #drawing figure with width of 20in and height of 10in
-    plt.figure(figsize=(20,10))
-    #TODO allow selection of projection
-    ax = plt.axes(projection=ccrs.PlateCarree())
-    #TODO fix this
-    ax.set_extent(boundaries)
-    ax.add_feature(cartopy.feature.OCEAN)
-    ax.add_feature(cartopy.feature.LAND, edgecolor='black')
-    ax.add_feature(cartopy.feature.LAKES, edgecolor='black')
-    ax.add_feature(cartopy.feature.RIVERS)
-    #TODO allow gridlines toggle
-    ax.gridlines()
-    #plotting geodataframe on AX
-    gdf.plot(ax=ax)
-    #saving to plot path
-    plt.savefig(export_path)
-    #this shows the window that we see
-    plt.show()
 
 def input_sg():
     """
@@ -69,6 +42,7 @@ def input_sg():
         [sg.Text('X boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
         [sg.Text('Y boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
         [sg.Text('Export to:', size=(18, 1)), sg.Input(), sg.FolderBrowse()],
+        [sg.Text('Plot type', size=(18, 1)), sg.Radio('Plot', 'Radio', default=True), sg.Radio('3D heat map', 'Radio')],
         [sg.Submit(), sg.Cancel()]]
         #actually displaying window
         window = sg.Window('Map Plotter', layout)
@@ -85,14 +59,19 @@ def input_sg():
             boundaries = [i for i in values[2]] + [i for i in values[3]]
         else:
             boundaries = [-180,180,-90,90]
-        if values[3]:
-            export_path = values[3]
+        if values[4]:
+            export_path = values[4]
         else:
             export_path = r'C:\Users\adams\Code\Map creator\map.png'
+        #TODO add more plot types
+        if values[5]:
+            plot_type = 'plot'
+        elif values[6]:
+            plot_type = 'heat_map'
         #must close window to continue script
         window.close()
 
-        return lat_column, lon_column, boundaries, export_path
+        return lat_column, lon_column, boundaries, export_path, plot_type
 
     #mapping path
     path = get_file()
@@ -104,12 +83,6 @@ def input_sg():
         raise SystemExit(0)
 
     #mapping variebles to definition variables
-    lat_column, lon_column, boundaries, export_path = return_options(df)
+    lat_column, lon_column, boundaries, export_path, plot_type = return_options(df)
 
-    return df, lat_column, lon_column, boundaries, export_path
-
-df, lat_column, lon_column, boundaries, export_path = input_sg()
-#popup reads data input back to you
-sg.popup('Results', "DataFrame head: ",df.head(), "Lat: "+lat_column, "Long: "+lon_column, "Boundaries :"+str(boundaries),"export path: "+export_path)
-#runs plotter
-HarryPlotter(df, lat_column, lon_column, boundaries, export_path)
+    return df, lat_column, lon_column, boundaries, export_path, plot_type
