@@ -20,4 +20,4 @@ Takes CSV input and maps csv using LAT/LONG
 6. Slider for time series data
 7. Maybe out put into HTML Map for interactivity
 8. package as exe using py installer
-    A. may need to switch to tkinter for exe
+9. may need to switch to tkinter for exe
