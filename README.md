@@ -21,5 +21,5 @@ Takes CSV input and maps csv using LAT/LONG
 7. Maybe out put into HTML Map for interactivity
 8. package as exe using py installer
 9. may need to switch to tkinter for exe
-10. ~~ load in data first then give options
+10. ~~load in data first then give options
 11. refactor code for readability
