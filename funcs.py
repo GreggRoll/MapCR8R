@@ -105,8 +105,6 @@ def input_sg():
 
     #mapping variebles to definition variables
     lat_column, lon_column, boundaries, export_path = return_options(df)
-    
-    print(lat_column, lon_column, boundaries, export_path)
 
     return df, lat_column, lon_column, boundaries, export_path
 

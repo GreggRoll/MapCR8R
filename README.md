@@ -22,4 +22,4 @@ Takes CSV input and maps csv using LAT/LONG
 8. package as exe using py installer
 9. may need to switch to tkinter for exe
 10. ~~load in data first then give options~~
-11. refactor code for readability
+11. ~~refactor code for readability~~
