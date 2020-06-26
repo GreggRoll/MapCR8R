@@ -1,3 +1,7 @@
 .ipynb_checkpoints/getData-checkpoint.ipynb
 .ipynb_checkpoints/Main-checkpoint.ipynb
 .vscode/settings.json
+__pycache__/funcs.cpython-37.pyc
+__pycache__/GUI.cpython-37.pyc
+__pycache__/plotter.cpython-37.pyc
+map.png
