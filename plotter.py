@@ -25,8 +25,10 @@ def HarryPlotter(df, lat_column, lon_column, boundaries, export_path, plot_type)
     #plotting geodataframe on AX
     if plot_type == 'plot':
             gdf.plot(ax=ax)
+    #3D heat map using kdeplot density closeness
     elif plot_type == 'heat_map':
-            geoplot.kdeplot(gdf, ax=ax, shade=True, cmap='Reds')
+            #boundaries wwere not reading from set extent, had to refactor because geoplot.kdeplot uses x0,y0,x1,y1
+            geoplot.kdeplot(gdf, ax=ax, shade=True, cmap='Reds', extent=[boundaries[0], boundaries[2], boundaries[1], boundaries[3]])
     #saving to plot path
     plt.savefig(export_path)
     #this shows the window that we see

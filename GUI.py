@@ -38,9 +38,8 @@ def input_sg():
         layout = [
         [sg.Text('Lat name:', size=(18, 1)), sg.InputCombo(column_list), sg.Text()],
         [sg.Text('Long name:', size=(18, 1)), sg.InputCombo(column_list), sg.Text()],
-        [sg.Text('Please input boundaries as (x0, x1)', size=(30,1), text_color='RED')],
-        [sg.Text('X boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
-        [sg.Text('Y boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
+        [sg.Text('Please input boundaries as x0, x1, y0, y1', size=(30,1), text_color='RED')],
+        [sg.Text('Map boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
         [sg.Text('Export to:', size=(18, 1)), sg.Input(), sg.FolderBrowse()],
         [sg.Text('Plot type', size=(18, 1)), sg.Radio('Plot', 'Radio', default=True), sg.Radio('3D heat map', 'Radio')],
         [sg.Submit(), sg.Cancel()]]
@@ -52,21 +51,23 @@ def input_sg():
         get_cancel(event)
         #testing to
         if values[0] and values[1]:
-            lat_column, lon_column = values[1], values[2]
+            lat_column, lon_column = values[0], values[1]
         else:
             lat_column, lon_column = "Lat", "Long_"
-        if values[2] and values[3]:
-            boundaries = [i for i in values[2]] + [i for i in values[3]]
+        if values[2]:
+            #boundaries comes in as a string, splitting into list then casting as ints
+            boundaries = values[2].split(',')
+            boundaries = [int(i) for i in boundaries]
         else:
             boundaries = [-180,180,-90,90]
-        if values[4]:
-            export_path = values[4]
+        if values[3]:
+            export_path = values[3]
         else:
             export_path = r'C:\Users\adams\Code\Map creator\map.png'
         #TODO add more plot types
-        if values[5]:
+        if values[4]:
             plot_type = 'plot'
-        elif values[6]:
+        elif values[5]:
             plot_type = 'heat_map'
         #must close window to continue script
         window.close()
