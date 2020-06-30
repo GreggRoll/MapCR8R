@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 import geoplot
 
-def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_path, plot_type):
+def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend):
         """
         If variables not given in GUI it will default to values
         """
@@ -23,7 +23,7 @@ def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_pat
         ax.gridlines()
         #plotting geodataframe on AX
         if plot_type == 'point_plot':
-                gdf.plot(ax=ax)
+                gdf.plot(ax=ax, column=plot_col, legend=legend)
         #3D heat map using kdeplot density closeness
         elif plot_type == 'heat_map':
                 #boundaries wwere not reading from set extent, had to refactor because geoplot.kdeplot uses x0,y0,x1,y1
@@ -33,7 +33,7 @@ def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_pat
         #this shows the window that we see
         plt.show()
 
-def shp_plotter(gdf, plot_col, boundaries, export_path):
+def shp_plotter(gdf, plot_col, boundaries, export_path, legend):
         """
         can turn these two into 1 later, idk if best practice is to keep them seperate or not
         """
@@ -47,7 +47,11 @@ def shp_plotter(gdf, plot_col, boundaries, export_path):
         ax.add_feature(cartopy.feature.RIVERS)
 
         ax.gridlines()
+        
+        if plot_col:
+                gdf.plot(ax=ax, column=plot_col, legend=legend)
+        else:
+                gdf.plot(ax=ax)
 
-        gdf.plot(ax=ax)
-
+        plt.savefig(export_path)
         plt.show()

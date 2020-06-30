@@ -54,6 +54,7 @@ def input_sg():
             [sg.Text('Map boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
             [sg.Text('Export to:', size=(18, 1)), sg.Input(), sg.FolderBrowse()],
             [sg.Text('Plot type', size=(18, 1)), sg.Radio('Plot', 'Radio', default=True), sg.Radio('3D heat map', 'Radio')],
+            [sg.Text('Legend : ', size=(18, 1)), sg.Checkbox('Yes', default=False)],
             [sg.Submit(), sg.Cancel()]]
 
         else:
@@ -63,6 +64,7 @@ def input_sg():
             [sg.Text('Please input boundaries as x0, x1, y0, y1', size=(30,1), text_color='RED')],
             [sg.Text('Map boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
             [sg.Text('Export to:', size=(18, 1)), sg.Input(), sg.FolderBrowse()],
+            [sg.Text('Legend : ', size=(18, 1)), sg.Checkbox('Yes', default=False)],
             [sg.Submit(), sg.Cancel()]]
         #actually displaying window
         window = sg.Window('Map Plotter', layout)
@@ -100,9 +102,10 @@ def input_sg():
                 plot_type = 'point_plot'
             elif values[6]:
                 plot_type = 'heat_map'
+            legend = values[7]
             #must close window to continue script
             window.close()
-            return lat_column, lon_column, plot_col, boundaries, export_path, plot_type
+            return lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend
         else:
             if values[0]:
                 plot_col = values[0]
@@ -120,11 +123,11 @@ def input_sg():
                 export_path = values[2]
             else:
                 export_path = r'C:\Users\adams\Code\Map creator\map.png'
-            
+            legend = values[3]
             #must close window to continue script
             window.close()
 
-            return plot_col, boundaries, export_path
+            return plot_col, boundaries, export_path, legend
 
     #mapping path
     path, geometry_type = get_file()
@@ -134,13 +137,13 @@ def input_sg():
         try: 
             df = pd.read_csv(path)
             #mapping variebles to definition variables
-            lat_column, lon_column, plot_col, boundaries, export_path, plot_type = return_options(df, geometry_type)
-            return df, geometry_type, lat_column, lon_column, plot_col, boundaries, export_path, plot_type
+            lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend = return_options(df, geometry_type)
+            return df, geometry_type, lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend
         except:
             sg.popup("Error",'invalid CSV')
             raise SystemExit(0)
     else:
         df = gpd.read_file(path)
         #mapping variebles to definition variables
-        plot_col, boundaries, export_path = return_options(df, geometry_type)
-        return df, geometry_type, plot_col, boundaries, export_path
+        plot_col, boundaries, export_path, legend = return_options(df, geometry_type)
+        return df, geometry_type, plot_col, boundaries, export_path, legend
