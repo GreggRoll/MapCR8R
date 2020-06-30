@@ -19,7 +19,7 @@ min_max_lat = (-90,90)
 #min/max width in degrees
 min_max_width = (2,4)
 #min/max height
-min_max_height = (0.5,2)
+min_max_height = (0.5,2) 
 
 #list of lists
 lol = []
