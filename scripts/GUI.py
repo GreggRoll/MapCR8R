@@ -131,7 +131,6 @@ def input_sg():
 
     #mapping path
     path, geometry_type = get_file()
-    print(geometry_type)
     #testing CSV
     if geometry_type == 'Lat/Long':
         try: 
