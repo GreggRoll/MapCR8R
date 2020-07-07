@@ -3,7 +3,7 @@ This project is intended to allow users to quickly be able to plot data.
 # supported features
 
 # Sample Plot Map
-![demo map](plot_map.png)
+![demo map](images/plot_map.png)
 Plots points on map in given bounds using a lat/long column.
 # Sample 3D Heat Map
 ![Heat Map](3D_HM.png)
