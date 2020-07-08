@@ -56,6 +56,7 @@ def input_sg():
             [sg.Text('Long name:', size=(18, 1)), sg.InputCombo(column_list), sg.Text()],
             [sg.Text('Column to plot:', size=(18, 1)), sg.InputCombo(column_list), sg.Text()],
             [sg.Text('Please input boundaries as x0, x1, y0, y1', size=(30,1), text_color='RED')],
+            [sg.Text('Defaults to world boundaries if not given input', size=(30,1), text_color='RED')],
             [sg.Text('Map boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
             [sg.Text('Export to:', size=(18, 1)), sg.Input(), sg.FolderBrowse()],
             [sg.Text('Plot type', size=(18, 1)), sg.Radio('Plot', 'Radio', default=True), sg.Radio('3D heat map', 'Radio')],
@@ -67,6 +68,7 @@ def input_sg():
             layout = [
             [sg.Text('Column to plot:', size=(18, 1)), sg.InputCombo(column_list), sg.Text()],
             [sg.Text('Please input boundaries as x0, x1, y0, y1', size=(30,1), text_color='RED')],
+            [sg.Text('Defaults to world boundaries if not given input', size=(30,1), text_color='RED')],
             [sg.Text('Map boundaries:', size=(18, 1)), sg.Input(), sg.Text()],
             [sg.Text('Export to:', size=(18, 1)), sg.Input(), sg.FolderBrowse()],
             [sg.Text('Legend : ', size=(18, 1)), sg.Checkbox('Yes', default=False)],
