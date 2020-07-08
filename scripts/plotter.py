@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 import geoplot
 
-def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend):
+def lat_lon_plotter(df, plot_name, lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend):
         """
         If variables not given in GUI it will default to values
         """
@@ -14,6 +14,7 @@ def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_pat
         plt.figure(figsize=(20,10))
         #TODO allow selection of projection
         ax = plt.axes(projection=ccrs.PlateCarree())
+        ax.set_title(plot_name)
         ax.set_extent(boundaries)
         ax.add_feature(cartopy.feature.OCEAN)
         ax.add_feature(cartopy.feature.LAND, edgecolor='black')
@@ -33,7 +34,7 @@ def lat_lon_plotter(df, lat_column, lon_column, plot_col, boundaries, export_pat
         #this shows the window that we see
         plt.show()
 
-def shp_plotter(gdf, plot_col, boundaries, export_path, legend):
+def shp_plotter(gdf, plot_name, plot_col, boundaries, export_path, legend):
         """
         can turn these two into 1 later, idk if best practice is to keep them seperate or not
         """
@@ -41,6 +42,7 @@ def shp_plotter(gdf, plot_col, boundaries, export_path, legend):
 
         ax = plt.axes(projection=ccrs.PlateCarree())
         ax.set_extent(boundaries)
+        ax.set_title(plot_name)
         ax.add_feature(cartopy.feature.OCEAN)
         ax.add_feature(cartopy.feature.LAND, edgecolor='black')
         ax.add_feature(cartopy.feature.LAKES, edgecolor='black')

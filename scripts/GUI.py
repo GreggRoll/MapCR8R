@@ -24,6 +24,8 @@ def input_sg():
         window = sg.Window('Map Plotter', [
             [sg.Text('Please input the folder path')],
             [sg.Text('File path: ', size=(18, 1)), sg.Input(), sg.FileBrowse()],
+            [sg.Text('Plot name doubles as file name for export and plot title', size=(30,1), text_color='RED')],
+            [sg.Text('Plot name', size=(18, 1)), sg.Input(), sg.Text()],
             [sg.Text('Geometry type', size=(18, 1)), sg.Radio('Lat/Long', 'Radio0', default=True), sg.Radio('Shape file', 'Radio0')],
             [sg.Submit(), sg.Cancel()]])
         event, values = window.read()
@@ -33,12 +35,15 @@ def input_sg():
             path = values[0]
         else:
             path = r"C:\Users\adams\Code\Data sets\time_series_covid19_deaths_US.csv"
-        if values[1]:
+        
+        plot_name = values[1]
+        
+        if values[2]:
             geometry_type = 'Lat/Long'
         else:
             geometry_type = 'WKT'
         window.close()
-        return path, geometry_type
+        return path, plot_name, geometry_type
 
     def return_options(df, geometry_type):
         #get columns
@@ -93,7 +98,7 @@ def input_sg():
                 boundaries = [-180,180,-90,90]
             #export path
             if values[4]:
-                export_path = values[4]
+                export_path = values[4]+'/'+plot_name+'.png'
             else:
                 export_path = r'C:\Users\adams\Code\Map creator\map.png'
             #Plot type
@@ -120,7 +125,7 @@ def input_sg():
                 boundaries = [-180,180,-90,90]
             #export path
             if values[2]:
-                export_path = values[2]
+                export_path = values[2]+'/'+plot_name+'.png'
             else:
                 export_path = r'C:\Users\adams\Code\Map creator\map.png'
             legend = values[3]
@@ -130,14 +135,14 @@ def input_sg():
             return plot_col, boundaries, export_path, legend
 
     #mapping path
-    path, geometry_type = get_file()
+    path, plot_name, geometry_type = get_file()
     #testing CSV
     if geometry_type == 'Lat/Long':
         try: 
             df = pd.read_csv(path)
             #mapping variebles to definition variables
             lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend = return_options(df, geometry_type)
-            return df, geometry_type, lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend
+            return df, plot_name, geometry_type, lat_column, lon_column, plot_col, boundaries, export_path, plot_type, legend
         except:
             sg.popup("Error",'invalid CSV')
             raise SystemExit(0)
@@ -145,4 +150,4 @@ def input_sg():
         df = gpd.read_file(path)
         #mapping variebles to definition variables
         plot_col, boundaries, export_path, legend = return_options(df, geometry_type)
-        return df, geometry_type, plot_col, boundaries, export_path, legend
+        return df, plot_name, geometry_type, plot_col, boundaries, export_path, legend
