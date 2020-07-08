@@ -1,5 +1,9 @@
 ## Map CR8R
 This project is intended to allow users to quickly be able to plot data. 
+
+feature demo July 8 2020
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://drive.google.com/file/d/1WySkLcwzDR5q21vISP0OW17lb4qQzfQ-/view)
+
 # supported features
 
 # Sample Plot Map
